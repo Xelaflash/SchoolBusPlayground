@@ -6,64 +6,23 @@ let canvas = Canvas()
 PlaygroundPage.current.needsIndefiniteExecution = true
 PlaygroundPage.current.liveView = canvas
 
-/*:
- - - -
- # Découverte du canevas
- Le canevas, c'est l'étendue de pelouse verte qui se trouve sur la droite 🌿.
- Sur ce canevas, nous allons pouvoir dessiner notre route. Et nous allons faire cela en utilisant les fonctions proposées par le canevas :
- ## Route
+class Bus {
+    var driversName: String
+    var seats = 20
+    var occupiedSeats = 0
+    
+    init(driversName: String) {
+        self.driversName = driversName
+    }
+}
 
- `canvas.createRoadSection()`
- - 🛣 Cette fonction permet de **créer une section de route**. A chaque appel de cette fonction, une nouvelle section de route est crée.
+class RoadSection {
+    
+}
 
- `canvas.createHomeRoadSection()`
- - 🛣🏠 Similaire à la précédente, cette fonction permet de créer une section de route **qui contient une maison**.
+class Road {
+    var sections = [RoadSection]()
+}
 
- `canvas.createSchoolRoadSection()`
- - 🛣🏫 Similaire à la précédente, cette fonction permet de créer une section de route **qui contient une école**.
-
- ## Bus
- `canvas.moveBusForward()`
-
- - 🚌➡️ Cette fonction permet de faire avancer le bus jusqu'à la section de route suivante. Attention, le bus ne peut pas avancer s'il n'y a plus de route devant lui.
-
- `canvas.stopBus()`
- - 🚌🛑 Cette fonction permet de faire marquer un arrêt au bus.
-
- ## A vous de jouer !
- */
-
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createHomeRoadSection()
-
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createHomeRoadSection()
-
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createRoadSection()
-canvas.createSchoolRoadSection()
-
-
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.stopBus()
-
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.stopBus()
-
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.moveBusForward()
-canvas.stopBus()
+var testBus = Bus(driversName: "bite")
+print(testBus.driversName)
