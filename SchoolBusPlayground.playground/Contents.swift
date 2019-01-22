@@ -6,6 +6,73 @@ let canvas = Canvas()
 PlaygroundPage.current.needsIndefiniteExecution = true
 PlaygroundPage.current.liveView = canvas
 
+
+
+enum RoadSectionType {
+    case plain
+    case home
+    case school
+}
+
+class RoadSection {
+    var type: RoadSectionType
+    init(type: RoadSectionType) {
+        self.type = type
+        switch type {
+        case .plain:
+            canvas.createRoadSection()
+        case .home:
+            canvas.createHomeRoadSection()
+        case .school:
+            canvas.createSchoolRoadSection()
+        }
+    }
+    
+    static func createRoadToSchool() -> Road {
+        let road = Road(length: 0)
+        for i in 0..<30 {
+            if i%7 == 1 {
+                road.sections.append(HomeRoadSection(children: 2))
+            } else {
+                road.sections.append(RoadSection(type: .plain))
+            }
+        }
+        road.sections.append(SchoolRoadSection())
+        return road
+    }
+}
+
+// super fait ref à l'init de la classe mère
+class HomeRoadSection: RoadSection {
+    var children : Int
+    init(children: Int) {
+        self.children = children
+        super.init(type: .home)
+    }
+}
+
+class SchoolRoadSection: RoadSection {
+    init() {
+        super.init(type: .school)
+    }
+}
+
+class Road {
+    static let maxLength = 77
+    var sections = [RoadSection]()
+
+    init(length: Int) {
+        var length = length
+//        on verifie si la taille est inférieure à la taille max
+        if length > Road.maxLength {
+            length = Road.maxLength
+        }
+        for _ in 0..<length {
+            self.sections.append(RoadSection(type: .plain))
+        }
+    }
+}
+
 class Bus {
     var driversName: String
     var seats = 20
@@ -30,30 +97,27 @@ class Bus {
     }
 }
 
-class RoadSection {
-    init() {
-        canvas.createRoadSection()
-    }
-}
-
-class Road {
-    static let maxLength = 77
-    var sections = [RoadSection]()
-
-    init(length: Int) {
-        var length = length
-//        on verifie si la taille est inférieure à la taille max
-        if length > Road.maxLength {
-            length = Road.maxLength
-        }
-        for _ in 0..<length {
-            self.sections.append(RoadSection())
+class SchoolBus: Bus {
+    var SchoolName = ""
+    //    L'override est une technique qui permet à une classe fille de réécrire une méthode de la classe mère.
+    override func drive(road: Road) {
+        for section in road.sections {
+            switch section.type {
+            case .plain:
+                moveForward()
+            case .home:
+                stop()
+                moveForward()
+            case .school:
+                stop()
+            }
         }
     }
 }
 
-var testBus = Bus(driversName: "Schumi")
-//print(testBus.driversName)
-var testRoad = Road(length: 40)
-testBus.moveForward()
-testBus.drive(road: testRoad)
+
+//var testBus = Bus(driversName: "Schumi")
+////print(testBus.driversName)
+//var testRoad = Road(length: 40)
+//testBus.moveForward()
+//testBus.drive(road: testRoad)
