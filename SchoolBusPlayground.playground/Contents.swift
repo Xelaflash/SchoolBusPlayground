@@ -14,15 +14,46 @@ class Bus {
     init(driversName: String) {
         self.driversName = driversName
     }
+    
+    func moveForward() {
+        canvas.moveBusForward()
+    }
+    
+    func stop() {
+        canvas.stopBus()
+    }
+    
+    func drive(road: Road) {
+        for _ in road.sections {
+            moveForward()
+        }
+    }
 }
 
 class RoadSection {
-    
+    init() {
+        canvas.createRoadSection()
+    }
 }
 
 class Road {
+    static let maxLength = 77
     var sections = [RoadSection]()
+
+    init(length: Int) {
+        var length = length
+//        on verifie si la taille est inférieure à la taille max
+        if length > Road.maxLength {
+            length = Road.maxLength
+        }
+        for _ in 0..<length {
+            self.sections.append(RoadSection())
+        }
+    }
 }
 
-var testBus = Bus(driversName: "bite")
-print(testBus.driversName)
+var testBus = Bus(driversName: "Schumi")
+//print(testBus.driversName)
+var testRoad = Road(length: 40)
+testBus.moveForward()
+testBus.drive(road: testRoad)
