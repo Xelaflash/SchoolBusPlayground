@@ -76,7 +76,21 @@ class Road {
 class Bus {
     var driversName: String
     var seats = 20
-    var occupiedSeats = 0
+    var occupiedSeats = 0 {
+        willSet {
+            print("Il y a du mouvement dans le bus...")
+        }
+        didSet {
+            if oldValue < occupiedSeats {
+                print("\(occupiedSeats - oldValue) personnes viennent de monter !")
+            } else {
+                print("\(oldValue - occupiedSeats) personnes viennent de descendre !")
+            }
+        }
+    }
+    var description: String {
+        return "Je suis un bus conduit par \(driverName) avec \(occupiedSeats) personnes dedans." 
+    }
     
     init(driversName: String) {
         self.driversName = driversName
